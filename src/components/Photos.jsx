@@ -1,16 +1,27 @@
 import { ContextObject } from "../context";
-
+import Image from "./Image";
 function Photos() {
+  function getClass(i) {
+    if (i % 5 === 0) {
+      return "big";
+    } else if (i % 6 === 0) {
+      return "wide";
+    }
+  }
+
   return (
     <>
       <ContextObject.Consumer>
         {(valor) => {
-          if (valor.arrayPhotos[1] !== undefined) {
-            console.log(valor);
-            return <h1>{valor.arrayPhotos[1].url}</h1>;
-          } else {
-            return <h1>Loading...</h1>;
-          }
+          const { toggleFavorite } = valor;
+          return valor.arrayPhotos.map((obj, ind) => (
+            <Image
+              key={obj.id}
+              img={obj}
+              className={getClass(ind)}
+              toggleFavorite={toggleFavorite}
+            />
+          ));
         }}
       </ContextObject.Consumer>
 
