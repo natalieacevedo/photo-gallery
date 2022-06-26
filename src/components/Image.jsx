@@ -9,18 +9,6 @@ function Image({ img, className, toggleFavorite }) {
 
   const { id, isFavorite } = img;
 
-  function heart() {
-    let chosenHeart;
-    if (isFavorite) {
-      chosenHeart = filledHeart;
-    } else if (hovered && !isFavorite) {
-      chosenHeart = emptyHeart;
-    } else {
-      chosenHeart = "";
-    }
-    return chosenHeart;
-  }
-
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -28,13 +16,14 @@ function Image({ img, className, toggleFavorite }) {
       className={`${className} image-container`}
     >
       <img alt="random-pic" src={img.url} className="image-grid" />
-
-      <img
-        className="heart"
-        alt={hovered ? "heart" : ""}
-        onClick={() => toggleFavorite(id)}
-        src={heart()}
-      />
+      {(isFavorite || hovered) && (
+        <img
+          className="heart"
+          alt="heart"
+          onClick={() => toggleFavorite(id)}
+          src={isFavorite ? filledHeart : emptyHeart}
+        />
+      )}
       {hovered && <img className="add" alt="heart" src={add} />}
     </div>
   );
