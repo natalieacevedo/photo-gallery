@@ -1,13 +1,15 @@
 import { useState } from "react";
 import emptyHeart from "../assets/emptyheart.png";
 import filledHeart from "../assets/heart.png";
+import shoppingCart from "../assets/shoppingCart.png";
 import add from "../assets/add.png";
-//import { ContextObject } from "../context";
+import PropTypes from "prop-types";
 
-function Image({ img, className, toggleFavorite }) {
+function Image({ img, className, toggleFavorite, cartItems, addCartItems }) {
   const [hovered, setHovered] = useState(false);
 
   const { id, isFavorite } = img;
+  const isInCart = cartItems.some((el) => el.id === id);
 
   return (
     <div
@@ -24,9 +26,25 @@ function Image({ img, className, toggleFavorite }) {
           src={isFavorite ? filledHeart : emptyHeart}
         />
       )}
-      {hovered && <img className="add" alt="heart" src={add} />}
+      {(hovered || isInCart) && (
+        <img
+          onClick={() => addCartItems(img)}
+          className="add"
+          alt="heart"
+          src={isInCart ? shoppingCart : add}
+        />
+      )}
     </div>
   );
 }
+//`id`, `url`, and`isFavorite`;// ojo con el casing raro pero aqui es con lowercase
+Image.propTypes = {
+  img: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+  }),
+  className: PropTypes.string,
+};
 
 export default Image;

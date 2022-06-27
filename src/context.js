@@ -4,6 +4,7 @@ const ContextObject = createContext();
 
 function PhotoContextProvider(props) {
   const [arrayPhotos, setArrayPhotos] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   function toggleFavorite(id) {
     console.log(id);
@@ -15,6 +16,10 @@ function PhotoContextProvider(props) {
     });
   }
 
+  function addCartItems(imgObj) {
+    setCartItems((prev) => [...prev, imgObj]);
+  }
+
   useEffect(() => {
     axios
       .get(
@@ -24,7 +29,9 @@ function PhotoContextProvider(props) {
   }, []);
 
   return (
-    <ContextObject.Provider value={{ arrayPhotos, toggleFavorite }}>
+    <ContextObject.Provider
+      value={{ arrayPhotos, toggleFavorite, cartItems, addCartItems }}
+    >
       {props.children}
     </ContextObject.Provider>
   );
