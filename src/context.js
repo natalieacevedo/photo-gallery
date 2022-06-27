@@ -17,7 +17,13 @@ function PhotoContextProvider(props) {
   }
 
   function addCartItems(imgObj) {
-    setCartItems((prev) => [...prev, imgObj]);
+    setCartItems((prev) => {
+      if (prev.some((el) => el.id === imgObj.id)) {
+        return prev.filter((el) => el.id !== imgObj.id);
+      } else {
+        return [...prev, imgObj];
+      }
+    });
   }
 
   useEffect(() => {
