@@ -5,12 +5,18 @@ import shoppingCart from "../assets/shoppingCart.png";
 import add from "../assets/add.png";
 import PropTypes from "prop-types";
 
-function Image({ img, className, toggleFavorite, cartItems, addCartItems }) {
+function Image({
+  img,
+  className,
+  toggleFavorite,
+  cartItems,
+  addRemoveCartItems,
+}) {
   const [hovered, setHovered] = useState(false);
 
   const { id, isFavorite } = img;
   const isInCart = cartItems.some((el) => el.id === id);
-
+  //addRemoveCartItems;
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -28,9 +34,9 @@ function Image({ img, className, toggleFavorite, cartItems, addCartItems }) {
       )}
       {(hovered || isInCart) && (
         <img
-          onClick={() => addCartItems(img)}
+          onClick={() => addRemoveCartItems(img, isInCart)}
           className="add"
-          alt="heart"
+          alt="add or cart item"
           src={isInCart ? shoppingCart : add}
         />
       )}

@@ -16,14 +16,20 @@ function PhotoContextProvider(props) {
     });
   }
 
-  function addCartItems(imgObj) {
-    setCartItems((prev) => {
-      if (prev.some((el) => el.id === imgObj.id)) {
-        return prev.filter((el) => el.id !== imgObj.id);
-      } else {
-        return [...prev, imgObj];
-      }
-    });
+  function removeCartItems(id) {
+    setCartItems((prev) => prev.filter((el) => el.id !== id));
+  }
+
+  function removeAllCartItems() {
+    setCartItems([]);
+  }
+
+  function addRemoveCartItems(imgObj, isInCart) {
+    if (isInCart) {
+      removeCartItems(imgObj.id);
+    } else {
+      setCartItems((prev) => [...prev, imgObj]);
+    }
   }
 
   useEffect(() => {
@@ -36,7 +42,14 @@ function PhotoContextProvider(props) {
 
   return (
     <ContextObject.Provider
-      value={{ arrayPhotos, toggleFavorite, cartItems, addCartItems }}
+      value={{
+        arrayPhotos,
+        toggleFavorite,
+        cartItems,
+        addRemoveCartItems,
+        removeCartItems,
+        removeAllCartItems,
+      }}
     >
       {props.children}
     </ContextObject.Provider>

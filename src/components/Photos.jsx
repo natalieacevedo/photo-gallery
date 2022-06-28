@@ -13,7 +13,7 @@ function Photos() {
     <>
       <ContextObject.Consumer>
         {(valor) => {
-          const { toggleFavorite, cartItems, addCartItems } = valor;
+          const { toggleFavorite, cartItems, addRemoveCartItems } = valor;
           return valor.arrayPhotos.map((obj, ind) => (
             <Image
               key={obj.id}
@@ -21,7 +21,7 @@ function Photos() {
               className={getClass(ind)}
               toggleFavorite={toggleFavorite}
               cartItems={cartItems}
-              addCartItems={addCartItems}
+              addRemoveCartItems={addRemoveCartItems}
             />
           ));
         }}
