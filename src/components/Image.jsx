@@ -1,4 +1,6 @@
-import { useState } from "react";
+//import { useState } from "react";
+import useHover from "../hooks/useHover";
+
 import emptyHeart from "../assets/emptyheart.png";
 import filledHeart from "../assets/heart.png";
 import shoppingCart from "../assets/shoppingCart.png";
@@ -12,17 +14,13 @@ function Image({
   cartItems,
   addRemoveCartItems,
 }) {
-  const [hovered, setHovered] = useState(false);
+  const [hovered, enter, leave, ref] = useHover();
 
   const { id, isFavorite } = img;
   const isInCart = cartItems.some((el) => el.id === id);
-  //addRemoveCartItems;
+
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`${className} image-container`}
-    >
+    <div ref={ref} className={`${className} image-container`}>
       <img alt="random-pic" src={img.url} className="image-grid" />
       {(isFavorite || hovered) && (
         <img

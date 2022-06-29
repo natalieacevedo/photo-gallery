@@ -1,9 +1,9 @@
 import trash from "../assets/emptyTrash.png";
 import filledTrash from "../assets/trash.png";
-import { useState } from "react";
 import PropTypes from "prop-types";
+import useHover from "../hooks/useHover";
 function CartItem({ item, removeCartItems }) {
-  const [hoveredTrash, setHoveredTrash] = useState(false);
+  const [hovered, enter, leave, ref] = useHover();
   return (
     <div className="cartItem">
       <img
@@ -13,11 +13,10 @@ function CartItem({ item, removeCartItems }) {
         alt="chosenImage"
       />
       <img
-        onMouseEnter={() => setHoveredTrash(true)}
-        onMouseLeave={() => setHoveredTrash(false)}
+        ref={ref}
         onClick={() => removeCartItems(item.id)}
         className="trashIcon"
-        src={hoveredTrash ? filledTrash : trash}
+        src={hovered ? filledTrash : trash}
         alt="trashIcon"
       />
       <p>$5.99</p>
